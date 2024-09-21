@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # 3rd party
     "rest_framework",
     "corsheaders",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    # in app
     "accounts.apps.AccountsConfig",
     "posts.apps.PostsConfig",
 ]
@@ -139,5 +143,9 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULY_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
     ],
 }
