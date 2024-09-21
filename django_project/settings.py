@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-6()&id8e6%_!p5a0w@ik4(@=*xnf^3=$i@25a!k*ybvg_9piw("
+SECRET_KEY = env.bool("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = []
 
@@ -93,12 +97,7 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
 
 
 # Password validation
